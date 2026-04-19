@@ -76,4 +76,17 @@ app.get("/ping", (req, res) => res.send("pong"));
 // Start server
 // -----------------------------------------------
 const PORT = process.env.PORT || 3000;
+app.get("/test-email", async (req, res) => {
+  try {
+    await transporter.sendMail({
+      from: process.env.GMAIL_USER,
+      to: process.env.GMAIL_USER,
+      subject: "Test Email from G-TAX Server",
+      text: "Server is working correctly!"
+    });
+    res.send("Email sent successfully!");
+  } catch (err) {
+    res.send("Email failed: " + err.message);
+  }
+});
 app.listen(PORT, () => console.log(`G-TAX server running on port ${PORT}`));
